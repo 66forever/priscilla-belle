@@ -746,20 +746,16 @@
   let soundOn = true;
   bgMusic.volume = 0.5;
 
-  // autoplay: try immediately, then on any interaction (browser policy)
+  // autoplay on first interaction (browser policy)
   function tryPlay() {
-    if (!soundOn) return;
     bgMusic.play().catch(() => {});
-    document.removeEventListener('mousemove', tryPlay);
     document.removeEventListener('click', tryPlay);
     document.removeEventListener('keydown', tryPlay);
-    document.removeEventListener('touchstart', tryPlay);
   }
+  // try immediately, fallback to first interaction
   bgMusic.play().catch(() => {
-    document.addEventListener('mousemove', tryPlay);
     document.addEventListener('click', tryPlay);
     document.addEventListener('keydown', tryPlay);
-    document.addEventListener('touchstart', tryPlay);
   });
 
   function toggleSound(cb) {
